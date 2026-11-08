@@ -1,0 +1,10 @@
+create table listings (key text primary key, company text, website text, email text, ad_url text, created_at timestamptz default now());
+create table reports (id uuid primary key default gen_random_uuid(), listing_key text, company text, domain text, note text, evidence text[] default '{}', created_at timestamptz default now());
+create table comments (id uuid primary key default gen_random_uuid(), listing_key text references listings(key), author text, body text check (char_length(body) between 2 and 500), created_at timestamptz default now());
+alter table listings enable row level security; alter table reports enable row level security; alter table comments enable row level security;
+create policy "read" on listings for select using (true); create policy "add" on listings for insert with check (true);
+create policy "read" on reports for select using (true); create policy "add" on reports for insert with check (true);
+create policy "read" on comments for select using (true); create policy "add" on comments for insert with check (true);
+insert into storage.buckets (id, name, public) values ('evidence', 'evidence', true);
+create policy "upload evidence" on storage.objects for insert with check (bucket_id = 'evidence');
+create policy "view evidence" on storage.objects for select using (bucket_id = 'evidence');

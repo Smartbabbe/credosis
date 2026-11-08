@@ -1,0 +1,8 @@
+@import "tailwindcss";
+@theme {
+  --color-paper: #ffffff; --color-card: #f6f8f3; --color-ink: #3b2a1e; --color-bark: #6b4a32;
+  --color-line: #dde3d6; --color-moss: #566f48; --color-amber: #a97a22; --color-rust: #9a452a;
+  --font-display: "Newsreader", Georgia, serif; --font-sans: "Hanken Grotesk", system-ui, sans-serif;
+}
+body { background: var(--color-paper); color: var(--color-ink); font-family: var(--font-sans); }
+:focus-visible { outline: 2px solid var(--color-moss); outline-offset: 2px; }
